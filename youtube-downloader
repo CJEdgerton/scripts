@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# Want to accept the following user input
+# 1) link to video
+# 2) video or audio (if video best format)
+# 3) if audio music or talk
+
+# Float window and send (hide) success message to /dev/null
+i3-msg floating enable > /dev/null
+
+read -p "Enter the video's url: " url
+echo "The url is: $url!"
+
+while true; do
+	read -p "Download audio only? " yn
+	case $yn in
+		[Yy]* ) 
+			cd ~/Music; 
+			youtube-dl -x --audio-format mp3 $url; 
+			break;;
+		[Nn]* ) 
+			cd ~/Videos; 
+			youtube-dl $url; 
+			exit;;
+		* ) echo "Please answer yes or no.";;
+	esac
+done

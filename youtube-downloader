@@ -22,37 +22,33 @@
 i3-msg floating enable > /dev/null
 
 read -p "Enter the video's url: " url
-echo "The url is: $url!"
 
 while true; do
-	read -p "Download audio only? " yn
-	case $yn in
-		[Yy]* ) 
-			while true; do
-				read -p "Is this an audio book, talkshow, or podcast? " yn
-				case $yn in
-					[Yy]* ) 
-						cd ~/Music/Talk; 
-						i3-msg move scratchpad;
-						youtube-dl -x --audio-format mp3 $url;
-						notify-send --icon=gtk-info -t 5000 youtube-dl "Completed download of $url"
-						break;;
-					[Nn]* ) 
-						cd ~/Music; 
-						i3-msg move scratchpad;
-						youtube-dl -x --audio-format mp3 $url;
-						notify-send --icon=gtk-info -t 5000 youtube-dl "Completed download of $url"
-						exit;;
-					* ) echo "Please answer yes or no.";;
-				esac
-			done
-			break;;
-		[Nn]* ) 
+	read -p "Make a selection:
+		1) Video only	
+		2) Audio only - Podcast/Talkshow
+		3) Audio only - Music
+	" selection 
+	case $selection in
+		[1]* ) 
 			cd ~/Videos; 
 			i3-msg move scratchpad;
 			youtube-dl $url; 
 			notify-send --icon=gtk-info -t 5000 youtube-dl "Completed download of $url"
 			exit;;
-		* ) echo "Please answer yes or no.";;
+		[2]* ) 
+
+			cd ~/Music/Talk; 
+			i3-msg move scratchpad;
+			youtube-dl -x --audio-format mp3 $url;
+			notify-send --icon=gtk-info -t 5000 youtube-dl "Completed download of $url"
+			exit;;
+		[3]* ) 
+			cd ~/Music; 
+			i3-msg move scratchpad;
+			youtube-dl -x --audio-format mp3 $url;
+			notify-send --icon=gtk-info -t 5000 youtube-dl "Completed download of $url"
+			exit;;
+		* ) echo "Please make a valid selection.";;
 	esac
 done

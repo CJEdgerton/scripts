@@ -15,12 +15,30 @@ while true; do
 	read -p "Download audio only? " yn
 	case $yn in
 		[Yy]* ) 
-			cd ~/Music; 
-			youtube-dl -x --audio-format mp3 $url; 
+			while true; do
+				read -p "Is this an audio book, talkshow, or podcast? " yn
+				case $yn in
+					[Yy]* ) 
+						cd ~/Music/Talk; 
+						i3-msg move scratchpad;
+						youtube-dl -x --audio-format mp3 $url;
+						notify-send --icon=gtk-info -t 5000 youtube-dl "Completed download of $url"
+						break;;
+					[Nn]* ) 
+						cd ~/Music; 
+						i3-msg move scratchpad;
+						youtube-dl -x --audio-format mp3 $url;
+						notify-send --icon=gtk-info -t 5000 youtube-dl "Completed download of $url"
+						exit;;
+					* ) echo "Please answer yes or no.";;
+				esac
+			done
 			break;;
 		[Nn]* ) 
 			cd ~/Videos; 
+			i3-msg move scratchpad;
 			youtube-dl $url; 
+			notify-send --icon=gtk-info -t 5000 youtube-dl "Completed download of $url"
 			exit;;
 		* ) echo "Please answer yes or no.";;
 	esac

@@ -1,20 +1,11 @@
 #!/bin/sh
 
-# Want to accept the following user input
-# 1) link to video
-# 2) video or audio (if video best format)
-# 3) if audio music or talk
+# This script is a wrapper for youtube-dl that provides a convenient prompt for different options.
 
-
-
-
-# !!!!!!!! New instructions
-# Provide a list of options 1-x ex: 1) Video only 2) Podcast 3) Music > assign result to a variable
-# Next question: Move file to phone? (yn) > assign to variable
-# Proceed through and since result is in variable, nesting should be unnecessary
-
-# To see if phone is connected: phone_connected=`find -n mtpwhatever`
-# To get output length size=${#phone_connected}; echo $size
+# Next steps:
+# Create a variable containing the full path to the video
+# This can be down by using the download folder and searching for the v=xyz portion of the video url, as it is in the filename
+# Can then determine destination folder and copy the file there
 
 # ------------------------------------------------------------------------------------------------
 
@@ -71,7 +62,7 @@ while true; do
 		
 done
 
-# Move to phone if desired (Not making it here.
+# Perform phone related file transfers
 if [ $send_to_phone ]
 then
 	echo "Need to send to phone."

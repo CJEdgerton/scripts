@@ -68,21 +68,26 @@ while true; do
 			break;;
 		* ) echo "Please make a valid selection.";;
 	esac
-
-	# Move to phone if desired (Not making it here.
-	if [ $send_to_phone ]
-	then
-		echo "Need to send to phone."
-	fi
-
-	#phone_connected=`find /run/user/1000/gvfs -name 'Internal shared storage'`
-	#length=${#phone_connected}
-	#echo $length;
-	#if [ $length > 0 ]
-	#then
-	#	notify-send --icon=gtk-info -t 5000 phone_connected "phone is connected"
-	#fi
-
-	read -p "Hold on a minute" pauser
 		
 done
+
+# Move to phone if desired (Not making it here.
+if [ $send_to_phone ]
+then
+	echo "Need to send to phone."
+
+	phone_connected=`find /run/user/1000/gvfs -name 'Internal shared storage'`
+	length=${#phone_connected}
+
+	echo $length;
+
+	sleep 10 
+
+	if [ "$length" -gt 0 ]; then
+		notify-send --icon=gtk-info -t 5000 phone_connected "phone is connected"
+	else
+		echo "Phone not connected!"
+	fi
+
+	sleep 10 
+fi

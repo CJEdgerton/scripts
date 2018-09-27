@@ -2,11 +2,6 @@
 
 # This script is a wrapper for youtube-dl that provides a convenient prompt for different options.
 
-# Next steps:
-# Create a variable containing the full path to the video
-# This can be down by using the download folder and searching for the v=xyz portion of the video url, as it is in the filename
-# Can then determine destination folder and copy the file there
-
 # ------------------------------------------------------------------------------------------------
 
 # Float window and send (hide) success message to /dev/null
@@ -23,26 +18,13 @@ while true; do
 		3) Audio only - Music
 	" selection 
 
-	# Check if user wants to send file to phone
-	while true; do
-
-		read -p "Send to phone if available? " send_to_phone
-
-		case $send_to_phone in
-			[Yy]* ) send_to_phone=true; break;;
-			[Nn]* ) send_to_phone=false; break;;
-			* ) echo "Please answer yes or no.";;
-		esac
-
-	done
-
 	# Process selection
 	case $selection in
 		[1]* ) 
 			cd ~/Videos; 
-			# i3-msg move scratchpad;
-			#youtube-dl $url; 
-			#notify-send --icon=gtk-info -t 5000 youtube-dl "Completed download of $url"
+			i3-msg move scratchpad;
+			youtube-dl $url; 
+			notify-send --icon=gtk-info -t 5000 youtube-dl "Completed download of $url"
 			break;;
 		[2]* ) 
 
@@ -61,24 +43,3 @@ while true; do
 	esac
 		
 done
-
-# Perform phone related file transfers
-if [ $send_to_phone ]
-then
-	echo "Need to send to phone."
-
-	phone_connected=`find /run/user/1000/gvfs -name 'Internal shared storage'`
-	length=${#phone_connected}
-
-	echo $length;
-
-	sleep 10 
-
-	if [ "$length" -gt 0 ]; then
-		notify-send --icon=gtk-info -t 5000 phone_connected "phone is connected"
-	else
-		echo "Phone not connected!"
-	fi
-
-	sleep 10 
-fi

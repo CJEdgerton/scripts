@@ -1,0 +1,9 @@
+#!/bin/sh
+
+cryptsetup open --type luks /dev/sdc1 Kingston
+
+mkdir -p /media/cj/Kingston
+
+mount /dev/mapper/Kingston /media/cj/Kingston
+
+sudo -u cj ranger /media/cj/Kingston

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+sudo umount /media/cj/Kingston
+
+sudo cryptsetup close Kingston
